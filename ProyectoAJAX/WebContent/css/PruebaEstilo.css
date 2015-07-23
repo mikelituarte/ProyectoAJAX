@@ -1,0 +1,40 @@
+@CHARSET "ISO-8859-1";
+
+
+
+#principal{
+	background-color: #EEE;
+	height: 90%;
+	width: 100%;
+	position: absolute;
+	
+}
+
+#columna{
+	float: left;
+	height: 100%;
+	width: 20%;
+	position: relative;
+
+
+}
+
+#columna5{
+    clear: right;
+    height: 100%;
+    position: relative;
+    border-color: #DDD;
+
+}
+
+
+#fila{
+	height: 25%;
+	width: 100%;
+	position: relative;
+	border-color: #AAA;
+	text-align: center;
+	border-style: solid;
+	border-color: white;
+}
+

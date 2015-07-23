@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Juego de memory</title>
+
+<link href="../css/PruebaEstilo.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript">
+
+
+
+function aleatorio(inferior,superior){ 
+    var numPosibilidades = superior - inferior 
+    var aleat = Math.random() * numPosibilidades 
+    aleat = Math.round(aleat) 
+    return parseInt(inferior) + aleat 
+}
+
+function generarColor() {
+	var arrayColores = new Array(10);
+	
+	arrayColores[0] = "blue";
+	arrayColores[1] = "red";
+	arrayColores[2] = "yellow";
+	arrayColores[3] = "green";
+	arrayColores[4] = "grey";
+	arrayColores[5] = "pink";
+	arrayColores[6] = "cyan";
+	arrayColores[7] = "purple";
+	arrayColores[8] = "black";
+	arrayColores[9] = "lightgreen";
+	
+	return arrayColores[aleatorio(0,9)];
+}
+
+function comprobarColor(color, array, nColore){
+	
+	var nVeces = 0;
+	var valido = true;
+	
+	for (var i= 0; i < nColore; i++) {
+		if(array[i]==color){
+			nVeces++;
+		}
+		if(nVeces==2){
+			valido = false;
+		}
+	}
+	if(valido == true){
+		
+	}
+	
+}
+
+function crearTabla(){
+
+	var divPrincipal = document.getElementById("principal");
+	var divColumna = null;
+	var divFila = null;
+	var arrayColores = new Array();
+	
+    while (divPrincipal.hasChildNodes()) {
+    	divPrincipal.removeChild(divPrincipal.lastChild);
+	}
+	
+
+	for (var i= 0; i < 6; i++) {
+		
+		divColumna = document.createElement("div");
+		if(i ==5){
+			divColumna.setAttribute("id", "columna5");
+		}
+		else{
+			divColumna.setAttribute("id", "columna");
+		}
+		
+		if(i!=5){
+			for (var j= 0; j < 4; j++) {
+				divFila = document.createElement("div");
+				divFila.setAttribute("id", "fila");
+				divFila.setAttribute("dragable", "true");
+				//le asigno el color..
+				
+				divFila.setAttribute("style","background-color: "+ generarColor());
+				//le añado contenido...
+				divFila.innerHTML = 'fila '+j+' columna '+i;
+				//la añado a la columna...
+				divColumna.appendChild(divFila);
+			}
+			divPrincipal.appendChild(divColumna);
+		}
+	}
+	
+}
+
+</script>
+</head>
+<body>
+	<div>
+		<input type="submit" value="Iniciar juego" onclick="crearTabla();">
+	</div>
+
+	<div id="principal">
+		
+	</div>
+	
+
+
+</body>
+</html>

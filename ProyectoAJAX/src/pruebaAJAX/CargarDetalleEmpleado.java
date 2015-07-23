@@ -48,7 +48,7 @@ public class CargarDetalleEmpleado extends HttpServlet {
 			{
 			conexion = Pool.getConnection();
 			st = conexion.createStatement();
-			rs = st.executeQuery("SELECT salary, first_name, last_name FROM EMPLOYEES where employeeId ="+ id);
+			rs = st.executeQuery("SELECT salary, first_name, last_name FROM EMPLOYEES where employee_id ="+ id);
 			
 			 
 			response.setContentType("application/json");
