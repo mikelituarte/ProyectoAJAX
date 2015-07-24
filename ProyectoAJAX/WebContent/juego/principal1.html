@@ -8,57 +8,188 @@
 
 <script type="text/javascript">
 
+var primerDiv = null;
+var segundoDiv = null;
+var nElementos = 10;
+var primerClick = false;
+var segundoClick = false;
 
 
-function aleatorio(inferior,superior){ 
-    var numPosibilidades = superior - inferior 
-    var aleat = Math.random() * numPosibilidades 
-    aleat = Math.round(aleat) 
-    return parseInt(inferior) + aleat 
+
+
+
+
+function aleatorio(){
+	var inferior = 0;
+	var superior = 10;
+ 	var numPosibilidades = superior - inferior 
+   	var aleat = Math.random() * numPosibilidades 
+   	aleat = Math.round(aleat) 
+ 	return parseInt(inferior) + aleat; 
 }
 
-function generarColor() {
+function dameColor() {
 	var arrayColores = new Array(10);
-	
-	arrayColores[0] = "blue";
-	arrayColores[1] = "red";
-	arrayColores[2] = "yellow";
-	arrayColores[3] = "green";
+	arrayColores[0] = "yellow";
+	arrayColores[1] = "green";
+	arrayColores[2] = "red";
+	arrayColores[3] = "blue";
 	arrayColores[4] = "grey";
 	arrayColores[5] = "pink";
 	arrayColores[6] = "cyan";
 	arrayColores[7] = "purple";
 	arrayColores[8] = "black";
 	arrayColores[9] = "lightgreen";
-	
-	return arrayColores[aleatorio(0,9)];
+	return arrayColores[aleatorio()];
 }
 
-function comprobarColor(color, array, nColore){
+function bgc(){//back ground color	
 	
-	var nVeces = 0;
-	var valido = true;
+	var arrayColores = new Array(20);
+	var termine= false;
+	var num=0;
+	var color;
+	var n_yel=0;
+	var n_gre=0;
+	var n_red=0;
+	var n_blu=0;
+	var n_gry=0;
+	var n_pin=0;
+	var n_cya=0;
+	var n_pur=0;
+	var n_bla=0;
+	var n_lig=0;
 	
-	for (var i= 0; i < nColore; i++) {
-		if(array[i]==color){
-			nVeces++;
-		}
-		if(nVeces==2){
-			valido = false;
-		}
-	}
-	if(valido == true){
+	
+	while (num<20){
+		color = dameColor();
 		
+		if(color== "yellow" && n_yel<2){
+			arrayColores[num]=color;
+			n_yel++;
+			num++;
+		}
+		
+		if(color== "green" && n_gre<2){
+			arrayColores[num]=color;
+			n_gre++;
+			num++;
+		}
+		
+		if(color== "red" && n_red<2){
+			arrayColores[num]=color;
+			n_red++;
+			num++;
+		}
+		
+		if(color== "blue" && n_blu<2){
+			arrayColores[num]=color;
+			n_blu++;
+			num++;
+		}
+		
+		if(color== "grey" && n_gry<2){
+			arrayColores[num]=color;
+			n_gry++;
+			num++;
+		}
+		
+		if(color== "pink" && n_pin<2){
+			arrayColores[num]=color;
+			n_pin++;
+			num++;
+		}
+		
+		if(color== "cyan" && n_cya<2){
+			arrayColores[num]=color;
+			n_cya++;
+			num++;
+		}
+		
+		if(color== "purple" && n_pur<2){
+			arrayColores[num]=color;
+			n_pur++;
+			num++;
+		}
+		
+		if(color== "black" && n_bla<2){
+			arrayColores[num]=color;
+			n_bla++;
+			num++;
+		}
+		
+		if(color== "lightgreen" && n_lig<2){
+			arrayColores[num]=color;
+			n_lig++;
+			num++;
+		}	
+	}
+	return arrayColores;
+}
+
+
+function llama(div){
+	var colorDiv1 = null;
+	var colorDiv2 = null;
+	var divMensaje = document.getElementById("mensaje");
+	var divif = null;
+	
+    while (divMensaje.hasChildNodes()) {
+    	divMensaje.removeChild(divMensaje.lastChild);
 	}
 	
+	if(div != primerDiv){
+		if(!primerClick){
+			primerDiv = div;
+			primerClick = true;
+		}
+		else{
+			segundoDiv = div;
+			colorDiv1 = primerDiv.style.background;
+			colorDiv2 = div.style.background;
+			if(colorDiv1== colorDiv2){
+				primerDiv.style.background = "white";
+				segundoDiv.style.background = "white";
+				nElementos--;
+				primerDiv = null;
+				segundoDiv = null;
+				primerClick = false;
+				segundoClick = false;
+				if(nElementos==0){
+					alert("Has Ganado!!!!!");
+					crearTabla();
+					nElementos=10;
+				}
+			}
+			else{
+				divif = document.createElement("div");
+				divif.innerHTML = "No son iguales!!";
+				divMensaje.appendChild(divif);
+				primerDiv = null;
+				segundoDiv = null;
+				primerClick = false;
+				segundoClick = false;
+			}
+		}
+	}
+	else{
+		divif = document.createElement("div");
+		divif.innerHTML = 'Es el mismo Imbecil!!';
+		divMensaje.appendChild(divif);
+		//alert("es el mismo imbecil!!!");
+	}
 }
+
+
 
 function crearTabla(){
 
 	var divPrincipal = document.getElementById("principal");
 	var divColumna = null;
 	var divFila = null;
-	var arrayColores = new Array();
+	var arrayColores = new Array(20);
+	var arrayColores = bgc();
+	var nuColor = 0;
 	
     while (divPrincipal.hasChildNodes()) {
     	divPrincipal.removeChild(divPrincipal.lastChild);
@@ -69,7 +200,7 @@ function crearTabla(){
 		
 		divColumna = document.createElement("div");
 		if(i ==5){
-			divColumna.setAttribute("id", "columna5");
+			//divColumna.setAttribute("id", "columna5");
 		}
 		else{
 			divColumna.setAttribute("id", "columna");
@@ -79,17 +210,19 @@ function crearTabla(){
 			for (var j= 0; j < 4; j++) {
 				divFila = document.createElement("div");
 				divFila.setAttribute("id", "fila");
-				divFila.setAttribute("dragable", "true");
 				//le asigno el color..
 				
-				divFila.setAttribute("style","background-color: "+ generarColor());
+				//divFila.setAttribute("onmouseover","this.style.background=\"#F3F3F3\"");
+				divFila.setAttribute("style","background: "+ arrayColores[nuColor]+";");
+				divFila.setAttribute("onclick","llama(this);");
+				nuColor++;
 				//le añado contenido...
 				divFila.innerHTML = 'fila '+j+' columna '+i;
 				//la añado a la columna...
 				divColumna.appendChild(divFila);
 			}
 			divPrincipal.appendChild(divColumna);
-		}
+		}//divPrincipal.appendChild(divColumna);
 	}
 	
 }
@@ -98,11 +231,14 @@ function crearTabla(){
 </head>
 <body>
 	<div>
-		<input type="submit" value="Iniciar juego" onclick="crearTabla();">
+		<input type="submit" value="Iniciar juego" onclick="crearTabla();" id="boton">
+		<div id="mensaje">
+	   	</div>
 	</div>
 
+
+	
 	<div id="principal">
-		
 	</div>
 	
 
